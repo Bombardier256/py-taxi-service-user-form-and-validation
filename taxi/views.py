@@ -99,6 +99,7 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
 class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Driver
     form_class = DriverLicenseUpdateForm
+    success_url = reverse_lazy("taxi:driver-list")
 
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -111,7 +112,7 @@ def car_driver_add(request, pk: int, dr_pk: int):
     driver = Driver.objects.get(pk=dr_pk)
     car.drivers.add(driver)
 
-    return render(request, "taxi/car_detail.html", context={"car": car})
+    return render(request, "taxi/index.html")
 
 
 def car_driver_remove(request, pk: int, dr_pk: int):
@@ -119,4 +120,4 @@ def car_driver_remove(request, pk: int, dr_pk: int):
     driver = Driver.objects.get(pk=dr_pk)
     car.drivers.remove(driver)
 
-    return render(request, "taxi/car_detail.html", context={"car": car})
+    return render(request, "taxi/index.html")
